@@ -4,6 +4,8 @@ from django import shortcuts
 
 
 class ApiTestCase(test.APITestCase):
+    """Test case for API."""
+
     def test_repositories(self):
         response = self.client.get(shortcuts.reverse('repositories', kwargs={
             'owner': 'wieczorek1990',
