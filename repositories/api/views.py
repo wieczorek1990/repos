@@ -23,7 +23,6 @@ class RepositoriesView(views.APIView):
             'created_at': repository.created_at,
         }
 
-
     @classmethod
     def get(cls, request, owner=None, repository_name=None):
         if owner is None or repository_name is None:
