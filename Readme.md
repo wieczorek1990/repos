@@ -51,7 +51,7 @@ Deploy to production:
 
 Notes:
 
-* Time spent: 5h
+* Time spent: around 5h 30m
 * I had used my own Django boilerplate
 * Line max width 120 characters
 * Sample envs left on purpose
