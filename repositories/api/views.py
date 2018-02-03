@@ -12,9 +12,12 @@ class RepositoriesView(views.APIView):
 
     @staticmethod
     def get_data(owner, repository_name):
+        """Returns data for the serializer."""
+
         github_api = github.Github(settings.GITHUB_ACCESS_TOKEN)
         repository = github_api.get_repo(
-            '{}/{}'.format(owner, repository_name), lazy=False)
+            '{}/{}'.format(owner, repository_name), lazy=False
+        )
         return {
             'full_name': repository.full_name,
             'description': repository.description,
@@ -25,6 +28,8 @@ class RepositoriesView(views.APIView):
 
     @classmethod
     def get(cls, request, owner=None, repository_name=None):
+        """Handles GET HTTP requests"""
+
         if owner is None or repository_name is None:
             return response.Response(status=status.HTTP_400_BAD_REQUEST)
         serializer = serializers.RepositorySerializer(data=cls.get_data(
