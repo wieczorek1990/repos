@@ -6,21 +6,22 @@
 
 ## Setup
 
-1. Generate Github token on https://github.com/settings/tokens
-2. Setup local database:
+1. Setup database, e.g. for local instance:
     ```bash
     docker-compose up
     docker-compose exec postgres bash
     psql -h postgres -U postgres
     CREATE DATABASE repositories WITH OWNER postgres ENCODING 'utf-8';
     ```
-3. Tests:
+2. Run tests:
     ```bash
     docker-compose up
     docker-compose exec django bash
     ./repositories/manage.py test
     python ./e2e.py
     ```
-4. To deploy to production:
-  * create AWS Docker configuration (look into /docker-compose.yml)
-  * generate and load envs (look into /envs/)
+3. Deploy to production:
+  * create AWS Docker configuration (look into /docker-compose.yml) [#devops]
+  * generate envs (look into /envs/) [#devops]
+    * generate Github token https://github.com/settings/tokens
+    * generate Djago secret with `pwgen -sy 50 1`
