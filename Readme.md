@@ -6,7 +6,13 @@
 
 ## Setup
 
-1. Setup database, e.g. for local instance:
+1. Running:
+
+    ```bash
+    docker-compose up
+    ```
+
+2. Setup database, e.g. for local instance:
     ```bash
     docker-compose up
     docker-compose exec postgres bash
@@ -15,7 +21,7 @@
     ```
     Now run `docker-compose up` again for backend to start without faiilure.
 
-2. Run tests:
+3. Run tests:
     ```bash
     docker-compose up
     docker-compose exec django bash
@@ -39,12 +45,12 @@
     Transfer/sec:      8.56KB
      ```
 
-3. Deploy to production:
+4. Deploy to production:
   * create AWS Docker configuration (look into /docker-compose.yml and /Dockerfile) [#devops]
   * generate envs (look into /envs/) [#devops]
     * generate Github token https://github.com/settings/tokens
     * generate Djago secret with `pwgen -sy 50 1`
 
-4. Notes:
+5. Notes:
   * Time spent: 5h
   * I had used my own Django boilerplate
