@@ -10,4 +10,4 @@ COPY . /srv/
 WORKDIR /srv/repositories/
 CMD ../bin/wait postgres --\
  python manage.py migrate &&\
- uwsgi --http 0.0.0.0:8000 --wsgi-file repositories/wsgi.py --master --processes 4 --threads 2
+ uwsgi --http 0.0.0.0:8000 --wsgi-file repositories/wsgi.py --master --processes 32 --threads 8
