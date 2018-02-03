@@ -7,6 +7,11 @@
     psql -h postgres -U postgres
     CREATE DATABASE repositories WITH OWNER postgres ENCODING 'utf-8';
     ```
-3. To deploy to production:
+3. Tests:
+    ```bash
+    docker-compose exec django bash
+    ./repositories/manage.py test
+    ```
+4. To deploy to production:
   * create AWS Docker configuration (look into /docker-compose.yml)
-  * generate envs (look into /envs/)
+  * generate and load envs (look into /envs/)
