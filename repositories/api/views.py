@@ -2,6 +2,7 @@ import github
 from django.conf import settings
 from rest_framework import views
 from rest_framework import response
+from rest_framework import status
 
 from api import serializers
 
@@ -25,6 +26,10 @@ class RepositoriesView(views.APIView):
 
     @classmethod
     def get(cls, request, owner=None, repository_name=None):
-        serializer = serializers.RepositorySerializer(data=cls.get_data())
+        if owner is None or repository_name is None:
+            return response.Response(status=status.HTTP_400_BAD_REQUEST)
+        serializer = serializers.RepositorySerializer(data=cls.get_data(
+            owner, repository_name
+        ))
         serializer.is_valid(raise_exception=True)
         return response.Response(data=serializer.data)
