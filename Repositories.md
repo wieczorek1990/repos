@@ -40,7 +40,11 @@
      ```
 
 3. Deploy to production:
-  * create AWS Docker configuration (look into /docker-compose.yml) [#devops]
+  * create AWS Docker configuration (look into /docker-compose.yml and /Dockerfile) [#devops]
   * generate envs (look into /envs/) [#devops]
     * generate Github token https://github.com/settings/tokens
     * generate Djago secret with `pwgen -sy 50 1`
+
+4. Notes:
+  * Time spent: 5h
+  * I had used my own Django boilerplate
