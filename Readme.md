@@ -54,3 +54,4 @@ Notes:
 * Time spent: 5h
 * I had used my own Django boilerplate
 * Line max width 120 characters
+* Sample envs left on purpose
