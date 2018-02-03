@@ -6,3 +6,4 @@ mock==2.0.0
 psycopg2==2.7.3.2
 PyGithub==1.35
 requests==2.18.4
+uwsgi==2.0.15

@@ -3,9 +3,11 @@ RUN apt-get update &&\
  apt-get install -y postgresql-client &&\
  rm -rf /var/lib/apt/lists/*
 ENV PYTHONUNBUFFERED 1
-WORKDIR /srv
-ADD requirements.txt /srv
+WORKDIR /srv/
+ADD requirements.txt /srv/
 RUN pip install -r requirements.txt
-CMD bin/wait postgres --\
- python repositories/manage.py migrate &&\
- python repositories/manage.py runserver 0.0.0.0:8000
+COPY . /srv/
+WORKDIR /srv/repositories/
+CMD ../bin/wait postgres --\
+ python manage.py migrate &&\
+ uwsgi --http 0.0.0.0:8000 --wsgi-file repositories/wsgi.py --master --processes 4 --threads 2
