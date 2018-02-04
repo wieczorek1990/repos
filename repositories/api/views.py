@@ -32,8 +32,11 @@ class RepositoriesView(views.APIView):
 
         if owner is None or repository_name is None:
             return response.Response(status=status.HTTP_400_BAD_REQUEST)
-        serializer = serializers.RepositorySerializer(data=cls.get_data(
-            owner, repository_name
-        ))
-        serializer.is_valid(raise_exception=True)
-        return response.Response(data=serializer.data)
+        try:
+            serializer = serializers.RepositorySerializer(data=cls.get_data(
+                owner, repository_name
+            ))
+            serializer.is_valid(raise_exception=True)
+            return response.Response(data=serializer.data)
+        except github.UnknownObjectException:
+            return response.Response(status=status.HTTP_404_NOT_FOUND)

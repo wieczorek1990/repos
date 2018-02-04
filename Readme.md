@@ -1,10 +1,31 @@
 # Repositories
 
-Running:
+## Envs
+
+Create `/envs/` directory using `/envs.example/` as template.
+
+```bash
+# django
+DJANGO_DEBUG # 0 or 1 for disabled/enabled
+DJANGO_SECRET_KEY # 50 characters
+GITHUB_ACCESS_TOKEN # 40 characters
+
+# postgres
+POSTGRES_USERNAME # username
+POSTGRES_PASSWORD # password
+```
+
+## Running
+
+After creating envs run:
 
 ```bash
 docker-compose up
 ```
+
+This starts with failure when database is yet not created.
+
+## Database
 
 Setting up database, e.g. for local instance:
 
@@ -16,6 +37,8 @@ CREATE DATABASE repositories WITH OWNER postgres ENCODING 'utf-8';
 ```
 
 Now run `docker-compose up` again for backend to start without failure.
+
+## Tests
 
 Running tests:
 
@@ -42,6 +65,8 @@ Requests/sec:     26.39
 Transfer/sec:      8.56KB
 ```
 
+## Deployment
+
 Deploy to production:
 
 * create AWS Docker configuration (look into /docker-compose.yml and /Dockerfile) [#devops]
@@ -49,9 +74,8 @@ Deploy to production:
     * generate Github token https://github.com/settings/tokens
     * generate Djago secret with `pwgen -sy 50 1`
 
-Notes:
+## Notes
 
-* Time spent: around 5h 30m
+* Time spent: around 6h
 * I had used my own Django boilerplate
 * Line max width 120 characters
-* Sample envs left on purpose

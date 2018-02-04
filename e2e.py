@@ -47,6 +47,13 @@ class RepositoriesTestCase(unittest.TestCase):
         self.assertIsInstance(data['createdAt'], str)
         self.assertIsISO8601(data['createdAt'])
 
+    def test_a_non_existing_repository(self):
+        response = requests.get(
+            '{host}/repositories/a/b/'.format(
+                host=self.HOST,
+            )
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 if __name__ == '__main__':
     unittest.main()

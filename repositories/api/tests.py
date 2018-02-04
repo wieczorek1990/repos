@@ -1,4 +1,5 @@
 import mock
+import github
 from rest_framework import test
 from rest_framework import status
 from django import shortcuts
@@ -25,17 +26,17 @@ class ApiTestCase(test.APITestCase):
         self.assertTrue(mock_get_data.called)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    @MOCK_GET_DATA
-    def test_no_repository_name(self, mock_get_data):
-        response = self.client.get('/repositories/{owner}/'.format(
-            owner=self.owner
-        ))
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-
-    @MOCK_GET_DATA
+    @mock.patch('api.views.RepositoriesView.get_data',
+                side_effect=github.UnknownObjectException(
+                    data={
+                        'message': 'Not Found',
+                        'documentation_url': 'https://developer.github.com/v3'
+                    },
+                    status=404,
+                ))
     def test_non_existing_repository(self, mock_get_data):
-        response = self.client.get('/repositories/{owner}/{repository_name}'.format(
+        response = self.client.get('/repositories/{owner}/{repository_name}/'.format(
             owner=self.owner,
             repository_name='non-existing-repository-name',
         ))
-        self.assertEqual(response.status_code, status.HTTP_301_MOVED_PERMANENTLY)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
