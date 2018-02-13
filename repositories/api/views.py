@@ -26,7 +26,7 @@ class RepositoriesView(views.APIView):
             'stars': repository.stargazers_count,
             'created_at': str(repository.created_at),
         }
-        models.Repository.objects.create(
+        models.Repository.objects.get_or_create(
             owner=owner,
             data=data,
             repository_name=repository_name,
