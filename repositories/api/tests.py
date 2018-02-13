@@ -10,14 +10,12 @@ from api import factories
 class ApiTestCase(test.APITestCase):
     """Test case for API."""
 
-    MOCK_GET_DATA = mock.patch('api.views.RepositoriesView.get_data',
-                               return_value=dict(factories.RepositoryFactory()))
-
     def setUp(self):
         self.owner = 'wieczorek1990'
         self.repository_name = 'wieczorek1990.github.io'
 
-    @MOCK_GET_DATA
+    @mock.patch('api.views.RepositoriesView.get_data',
+                return_value=dict(factories.RepositoryFactory()))
     def test_repositories(self, mock_get_data):
         response = self.client.get(shortcuts.reverse('repositories', kwargs={
             'owner': self.owner,
