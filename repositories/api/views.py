@@ -8,7 +8,7 @@ from api import models
 from api import serializers
 
 
-github_api = github.Github(settings.GITHUB_ACCESS_TOKEN)
+GITHUB_API = github.Github(settings.GITHUB_ACCESS_TOKEN)
 
 
 class RepositoriesView(views.APIView):
@@ -17,7 +17,7 @@ class RepositoriesView(views.APIView):
     def get_external_data(self, owner, repository_name):
         """Returns data for the serializer."""
 
-        repository = github_api.get_repo(
+        repository = GITHUB_API.get_repo(
             '{}/{}'.format(owner, repository_name), lazy=False
         )
         data = {
