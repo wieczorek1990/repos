@@ -1,3 +1,4 @@
+import logging
 import github
 from django.conf import settings
 from rest_framework import views
@@ -55,3 +56,6 @@ class RepositoriesView(views.APIView):
             return response.Response(data=serializer.data)
         except github.UnknownObjectException:
             return response.Response(status=status.HTTP_404_NOT_FOUND)
+        except github.BadCredentialsException:
+            logging.error('GITHUB_ACCESS_TOKEN is invalid')
+            return response.Response(status=status.HTTP_503_SERVICE_UNAVAILABLE)
