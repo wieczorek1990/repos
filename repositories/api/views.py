@@ -14,7 +14,8 @@ GITHUB_API = github.Github(settings.GITHUB_ACCESS_TOKEN)
 class RepositoriesView(views.APIView):
     """View serving repository details."""
 
-    def get_external_data(self, owner, repository_name):
+    @staticmethod
+    def get_external_data(owner, repository_name):
         """Returns data for the serializer."""
 
         repository = GITHUB_API.get_repo(
