@@ -14,17 +14,17 @@ class ApiTestCase(test.APITestCase):
         self.owner = 'wieczorek1990'
         self.repository_name = 'wieczorek1990.github.io'
 
-    @mock.patch('api.views.RepositoriesView.get_data',
+    @mock.patch('api.views.RepositoriesView.get_external_data',
                 return_value=dict(factories.RepositoryFactory()))
-    def test_repositories(self, mock_get_data):
+    def test_repositories(self, mock_get_external_data):
         response = self.client.get(shortcuts.reverse('repositories', kwargs={
             'owner': self.owner,
             'repository_name': self.repository_name,
         }))
-        self.assertTrue(mock_get_data.called)
+        self.assertTrue(mock_get_external_data.called)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    @mock.patch('api.views.RepositoriesView.get_data',
+    @mock.patch('api.views.RepositoriesView.get_external_data',
                 side_effect=github.UnknownObjectException(
                     data={
                         'message': 'Not Found',
@@ -32,7 +32,7 @@ class ApiTestCase(test.APITestCase):
                     },
                     status=404,
                 ))
-    def test_non_existing_repository(self, mock_get_data):
+    def test_non_existing_repository(self, get_external_data):
         response = self.client.get('/repositories/{owner}/{repository_name}/'.format(
             owner=self.owner,
             repository_name='non-existing-repository-name',
