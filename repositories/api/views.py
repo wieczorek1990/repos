@@ -58,7 +58,7 @@ class RepositoriesView(views.APIView):
             return response.Response(status=status.HTTP_404_NOT_FOUND)
         except github.BadCredentialsException:
             logging.error('GITHUB_ACCESS_TOKEN is invalid')
-            return response.Response(status=status.HTTP_503_SERVICE_UNAVAILABLE)
+            return response.Response(status=status.HTTP_400_BAD_REQUEST)
         except github.GithubException:  # this is the fallback exception
             logging.error('Github is down or something else is wrong')
             return response.Response(status=status.HTTP_503_SERVICE_UNAVAILABLE)
