@@ -1,6 +1,7 @@
 import logging
 import github
 from django.conf import settings
+from django.db import transaction
 from rest_framework import views
 from rest_framework import response
 from rest_framework import status
@@ -29,11 +30,12 @@ class RepositoriesView(views.APIView):
             'stars': repository.stargazers_count,
             'created_at': str(repository.created_at),
         }
-        models.Repository.objects.get_or_create(
-            owner=owner,
-            data=data,
-            repository_name=repository_name,
-        )
+        with transaction.atomic():
+            models.Repository.objects.get_or_create(
+                owner=owner,
+                repository_name=repository_name,
+                defaults=dict(data=data),
+            )
         return data
 
     @classmethod
